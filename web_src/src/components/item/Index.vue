@@ -1,14 +1,14 @@
 <template>
   <div class="hello">
-    <Header> </Header>
+    <Header></Header>
 
     <el-container class="container-narrow">
 
       <el-row class="masthead">
 
-          <div class="logo-title ">
+          <!-- <div class="logo-title ">
               <h2 class="muted"><img src="static/logo/b_64.png" style="width:50px;height:50px;margin-bottom:-10px;" alt="">ShowDoc</h2>
-          </div>
+          </div> -->
           <div class="header-btn-group pull-right">
             <el-button type="text"  @click="feedback">{{$t("feedback")}}</el-button>
             &nbsp;&nbsp;&nbsp;
@@ -152,6 +152,7 @@
   }
 
 </style>
+
 
 <script>
 if (typeof window !== 'undefined') {

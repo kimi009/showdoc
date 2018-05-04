@@ -22,7 +22,6 @@
                     <router-link :to="'/item/setting/'+item_info.item_id"  v-if="item_info.ItemCreator"><el-dropdown-item>{{$t('item_setting')}}</el-dropdown-item></router-link>
                     <router-link to="/item/index"><el-dropdown-item >{{$t('goback')}}</el-dropdown-item></router-link>
                   </el-dropdown-menu>
-                  </el-dropdown-menu>
                 </el-dropdown>
             </div>
 
