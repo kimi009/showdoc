@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <Header> </Header>
+    <!-- <Header> </Header> -->
 
     <el-container class="container-narrow">
 
@@ -216,6 +216,7 @@ export default {
           .then(function (response) {
             if (response.data.error_code === 0 ) {
               //that.$message.success("加载成功");
+              console.log(`pageInfo 219=${response.data}`)
               that.content = response.data.data.page_content ;
               that.title = response.data.data.page_title ;
               that.item_id = response.data.data.item_id ;

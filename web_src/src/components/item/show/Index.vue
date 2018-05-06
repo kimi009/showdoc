@@ -132,11 +132,17 @@ export default {
   position: relative;
   top: 30px;
 }
-.el-aside{
+.el-aside {
   top: 54px;
 }
-.page-bar{
+.page-bar {
   position: relative;
   top: 30px;
+}
+.container-narrow {
+  top: 80px;
+}
+.el-card {
+  top: 330px;
 }
 </style>

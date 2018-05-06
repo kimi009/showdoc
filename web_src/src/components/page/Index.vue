@@ -123,6 +123,7 @@ export default {
           .then(function (response) {
             if (response.data.error_code === 0 ) {
               //that.$message.success("加载成功");
+              console.log(`pageInfo 126=${response.data}`)
               that.content = response.data.data.page_content ;
               that.page_title = response.data.data.page_title ;
 

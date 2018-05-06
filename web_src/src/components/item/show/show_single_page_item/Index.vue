@@ -161,6 +161,7 @@ export default {
         params.append('page_id',  page_id);
         that.axios.post(url, params)
           .then(function (response) {
+            console.log(`pageInfo 164=${response.data}`)
             if (response.data.error_code === 0 ) {
               //that.$message.success("加载成功");
               that.content = response.data.data.page_content ;

@@ -40,8 +40,8 @@
 
             <div v-if="!item_info.is_login">
               <router-link to="/user/login">{{$t('login_or_register')}}</router-link>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <a href="https://www.showdoc.cc/help" target="_blank">{{$t('about_showdoc')}}</a>
+              <!-- &nbsp;&nbsp;&nbsp;&nbsp; -->
+              <!-- <a href="https://www.showdoc.cc/help" target="_blank">{{$t('about_showdoc')}}</a> -->
             </div>
 
           </div>
@@ -126,12 +126,27 @@ export default {
         });
       }
       var that = this;
+      //#region
+      // let test =
+      //   '{"page_id":"2","author_uid":"2","author_username":"kimi009","item_id":"1","cat_id":"3","page_title":"概述","page_content":"票税宝提供了发票抬头、发票列表、发票查看、发票采集、发票管理、发票报销等API,管理员可以使用这些API，为自己应用接入更多个性化发票管理功能。开放平台是运营者通过开放账号，为企业用户提供发票服务的平台，而公众平台开发接口则是提供服务的基础，开发者在开放平台网站中创建开放账号、获取接口权限后，可以通过阅读本接口文档来帮助开发。为了识别用户，每个用户会产生唯一安全APPID","s_number":"10","addtime":"2018-05-04 19:22:02","page_comments":""}';
+      // let resData = JSON.parse(test);
+      // that.content = resData.page_content;// response.data.data.page_content;
+
+      // that.page_title = resData.page_title;
+      // that.page_info = resData.data;
+      // //切换变量让它重新加载、渲染子组件
+      // that.page_id = 0;
+      // that.$nextTick(() => {
+      //   that.page_id = page_id;
+      // });
+      //#endregion
       var url = DocConfig.server + "/api/page/info";
       //var loading = that.$loading({target:".page_content_main",fullscreen:false});
       var params = new URLSearchParams();
       params.append("page_id", page_id);
       that.axios.post(url, params).then(function(response) {
         //loading.close();
+        console.log(`pageInfo 135=${JSON.stringify(response.data.data)}`)
         if (response.data.error_code === 0) {
           that.content = response.data.data.page_content;
 
@@ -218,7 +233,7 @@ export default {
 }
 .el-aside {
   color: #333;
-  background-color: #EDEFF2;
+  background-color: #edeff2;
   position: fixed;
   height: calc(100% - 20px);
   /* background-color: rgb(250, 250, 250); */
@@ -266,3 +281,4 @@ export default {
   cursor: pointer;
 }
 </style>
+

@@ -7,7 +7,7 @@
       <div class="psb_header_right">
         <el-input class="psb_header_search" @keyup.enter.native="input_keyword" :placeholder="$t('input_keyword')" v-model="keyword">
         </el-input>
-        <span class="contact">联系我们</span>
+        <!-- <span class="contact">联系我们</span> -->
       </div>
     </div>
 
@@ -49,7 +49,7 @@ export default {
 }
 .psb_header_right {
   position: absolute;
-  right: 30px;
+  right: 5px;
   font-size: 13px;
   line-height: 54px;
   color: #787878;

@@ -1,15 +1,6 @@
 <template>
   <div class="hello">
-
-    <el-menu @select="select_menu" background-color="#fafafa" text-color="" active-text-color="#008cff" :default-active="item_info.default_page_id" :default-openeds='openeds' :unique-opened='true'>
-
-      <!-- <el-input 
-            @keyup.enter.native="input_keyword"
-            :placeholder="$t('input_keyword')"
-            v-model="keyword">
-           
-          </el-input> -->
-
+    <div class="left_menu">
       <div class="new-bar" v-if="item_info.ItemPermn && item_info.is_archived < 1 ">
         <el-tooltip class="item" effect="dark" :content="$t('new_page')" placement="left">
           <i class="el-icon-plus" @click="new_page"></i>
@@ -18,36 +9,63 @@
           <i class="el-icon-message" @click="mamage_catalog"></i>
         </el-tooltip>
       </div>
+      <div v-if="menu.pages.length " v-for="(page ,index) in menu.pages" :index="page.page_id" :key="page.page_id">
+        <p class="catalog-page-title">{{page.page_title}}</p>
+      </div>
+      <div class="catalog" v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id">
+        <p class="catalog-page-title">{{catalog2.cat_name}}</p>
+        <div v-if="catalog2.pages" v-for="(page2 ,page2_index) in catalog2.pages" :key="page2.page_id">
+          <p class="catalog-title" :class="currentId == page2.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page2)">{{page2.page_title}}</p>
+          <div v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
+            <p class="catalog-page-title">{{catalog3.cat_name}}</p>
+            <div v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">
+              <p class="catalog-title">{{page3.page_title}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- 一级页面 -->
-      <el-menu-item v-if="menu.pages.length " v-for="(page ,index) in menu.pages" :index="page.page_id" :key="page.page_id">
-        <!-- <i style="margin-left:30px;"></i> -->
-        {{page.page_title}}
-      </el-menu-item>
+    <!-- <el-menu @select="select_menu" background-color="#fafafa" text-color="" active-text-color="#008cff" :default-active="item_info.default_page_id" :default-openeds='openeds' :unique-opened='false'>
 
-      <!-- 目录开始 -->
-      <el-submenu v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id">
-        <!-- 二级目录名 -->
-        <template slot="title">
-          <!-- <i class="el-icon-message"></i> -->
-          {{catalog2.cat_name}}
-        </template>
+          <div class="new-bar" v-if="item_info.ItemPermn && item_info.is_archived < 1 ">
+            <el-tooltip class="item" effect="dark" :content="$t('new_page')" placement="left">
+              <i class="el-icon-plus" @click="new_page"></i>
+            </el-tooltip>
+            <el-tooltip class="item" effect="dark" :content="$t('new_catalog')" placement="right">
+              <i class="el-icon-message" @click="mamage_catalog"></i>
+            </el-tooltip>
+          </div> -->
 
-        <!-- 二级目录的页面 -->
-        <el-menu-item-group v-if="catalog2.pages" v-for="(page2 ,page2_index) in catalog2.pages" :key="page2.page_id">
-          <el-menu-item :index="page2.page_id">{{page2.page_title}}</el-menu-item>
-        </el-menu-item-group>
+    <!-- 一级页面 -->
+    <!-- <el-menu-item v-if="menu.pages.length " v-for="(page ,index) in menu.pages" :index="page.page_id" :key="page.page_id">
+            <i style="margin-left:30px;"></i>
+            {{page.page_title}}
+          </el-menu-item> -->
 
-        <!-- 二级目录下的三级目录 -->
-        <el-submenu v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
-          <template slot="title">{{catalog3.cat_name}}</template>
-          <!-- 三级目录的页面 -->
-          <el-menu-item v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">{{page3.page_title}}</el-menu-item>
-        </el-submenu>
+    <!-- 目录开始 -->
+    <!-- <el-submenu v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id"> -->
+    <!-- 二级目录名 -->
+    <!-- <template slot="title">
+              <i class="el-icon-message"></i>
+              {{catalog2.cat_name}}
+            </template> -->
 
-      </el-submenu>
+    <!-- 二级目录的页面 -->
+    <!-- <el-menu-item-group v-if="catalog2.pages" v-for="(page2 ,page2_index) in catalog2.pages" :key="page2.page_id">
+              <el-menu-item :index="page2.page_id">{{page2.page_title}}</el-menu-item>
+            </el-menu-item-group> -->
 
-    </el-menu>
+    <!-- 二级目录下的三级目录 -->
+    <!-- <el-submenu v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
+              <template slot="title">{{catalog3.cat_name}}</template> -->
+    <!-- 三级目录的页面 -->
+    <!-- <el-menu-item v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">{{page3.page_title}}</el-menu-item>
+            </el-submenu>
+
+          </el-submenu>
+
+        </el-menu> -->
   </div>
 </template>
 
@@ -64,15 +82,21 @@ export default {
     return {
       // keyword:'',
       openeds: [],
-      menu: ""
+      menu: "",
+      currentId: ""
     };
   },
   components: {
     Editormd
   },
   methods: {
+    selectItem(item) {
+      this.currentId = item.page_id;
+      this.select_menu(item.page_id);
+    },
     //选中菜单的回调
     select_menu(index, indexPath) {
+      console.log(`index=${index} indexPath=${indexPath}`);
       this.change_url(index);
       this.get_page_content(index);
     },
@@ -106,23 +130,23 @@ export default {
   mounted() {
     var that = this;
     this.menu = this.item_info.menu;
-    var item_info = this.item_info;
+    // var item_info = this.item_info;
     //默认展开页面
-    if (item_info.default_page_id > 0) {
-      that.select_menu(item_info.default_page_id);
-      if (item_info.default_cat_id3) {
-        that.openeds = [
-          item_info.default_cat_id3,
-          item_info.default_cat_id2,
-          item_info.default_page_id
-        ];
-      } else if (item_info.default_cat_id2) {
-        that.openeds = [item_info.default_cat_id2, item_info.default_page_id];
-      }
-    } else {
-      that.select_menu(2);
-    }
-    that.openeds = ["3", "6", "18", "19"];
+    // if (item_info.default_page_id > 0) {
+    //   that.select_menu(item_info.default_page_id);
+    //   if (item_info.default_cat_id3) {
+    //     that.openeds = [
+    //       item_info.default_cat_id3,
+    //       item_info.default_cat_id2,
+    //       item_info.default_page_id
+    //     ];
+    //   } else if (item_info.default_cat_id2) {
+    //     that.openeds = [item_info.default_cat_id2, item_info.default_page_id];
+    //   }
+    // } else {
+    //   that.select_menu(2);
+    // }
+    // that.openeds = ["3", "6", "18", "19"];
   }
 };
 </script>
@@ -140,7 +164,7 @@ export default {
   height: calc(100% - 20px);
 }
 .el-input-group__append button.el-button {
-  background-color: #ffffffa3;
+  background-color: #ffffff;
 }
 .new-bar {
   margin-left: 190px;
@@ -159,6 +183,34 @@ export default {
   border-right: none;
   background-color: #edeff2 !important;
 }
+
+.catalog {
+  margin-bottom: 14px;
+}
+.catalog-page-title {
+  margin: 0px;
+  font-weight: 700;
+  line-height: 32px;
+  color: #999;
+  cursor: default;
+  padding: 0 30px;
+}
+.catalog-title {
+  margin: 0px;
+  line-height: 30px;
+  font-size: 14px;
+  color: #000;
+  padding: 0 30px;
+  cursor: pointer;
+}
+.catalog-actived-title {
+  background-color: #4a77ac;
+  color: #fff;
+}
+.catalog-normal-title {
+  background-color: #edeff2;
+  color: #000;
+}
 </style>
 <style>
 .el-menu,
@@ -171,11 +223,31 @@ export default {
 #left-side::-webkit-scrollbar {
   width: 6px;
   height: 1px;
+  background: rgba(0, 0, 0, 0.1);
 }
-
+#left-side::-webkit-scrollbar:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
 #left-side::-webkit-scrollbar-thumb {
-  background-color: #ccc;
-  border-radius: 5px;
+  background: rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+}
+#left-side::-webkit-scrollbar-thumb:hover {
+  -webkit-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  /* Webkit browsers */
+  -moz-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  /* Firefox */
+  -ms-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  /* IE9 */
+  -o-box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  /* Opera(Old) */
+  box-shadow: inset 1px 1px 1px rgba(0, 0, 0, 0.25);
+  /* IE9+, News */
+  background-color: rgba(0, 0, 0, 0.4);
 }
 </style>
 
