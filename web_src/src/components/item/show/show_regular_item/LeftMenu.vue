@@ -15,12 +15,12 @@
       <div class="catalog" v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id">
         <p class="catalog-page-title catalog2-page-title">{{catalog2.cat_name}}</p>
         <div v-if="catalog2.pages" v-for="(page2 ,page2_index) in catalog2.pages" :key="page2.page_id">
-          <p class="catalog-title catalog2-title" :class="currentId == page2.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page2)">{{page2.page_title}}</p>
+          <p class="catalog-title catalog2-title" :class="currentId == page2.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page2.page_id)">{{page2.page_title}}</p>
         </div>
         <div v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
           <p class="catalog-page-title catalog3-page-title">{{catalog3.cat_name}}</p>
           <div v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">
-            <p class="catalog-title catalog3-title">{{page3.page_title}}</p>
+            <p class="catalog-title catalog3-title" :class="currentId == page3.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page3.page_id)">{{page3.page_title}}</p>
           </div>
         </div>
       </div>
@@ -90,9 +90,9 @@ export default {
     Editormd
   },
   methods: {
-    selectItem(item) {
-      this.currentId = item.page_id;
-      this.select_menu(item.page_id);
+    selectItem(pageId) {
+      this.currentId = pageId;
+      this.select_menu(pageId);
     },
     //选中菜单的回调
     select_menu(index, indexPath) {
@@ -130,7 +130,22 @@ export default {
   mounted() {
     var that = this;
     this.menu = this.item_info.menu;
-    // var item_info = this.item_info;
+    var item_info = this.item_info;
+    this.$nextTick(() => {
+      if (that.$route.query.page_id) {
+        that.selectItem(that.$route.query.page_id);
+      } else if (
+        that.menu &&
+        that.menu.catalogs &&
+        that.menu.catalogs[0] &&
+        that.menu.catalogs[0].pages &&
+        that.menu.catalogs[0].pages[0]
+      ) {
+        console.log(`page1=${JSON.stringify(that.menu.catalogs[0].pages[0])}`);
+        that.selectItem(that.menu.catalogs[0].pages[0].page_id);
+      }
+    });
+
     //默认展开页面
     // if (item_info.default_page_id > 0) {
     //   that.select_menu(item_info.default_page_id);
@@ -198,10 +213,10 @@ export default {
   cursor: default;
   padding: 0 30px;
 }
-.catalog2-page-title{
+.catalog2-page-title {
   font-size: 16px;
 }
-.catalog3-page-title{
+.catalog3-page-title {
   font-size: 14px;
   /* margin-left: 16px; */
 }
