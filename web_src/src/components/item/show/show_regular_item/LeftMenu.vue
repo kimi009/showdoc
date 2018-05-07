@@ -10,7 +10,7 @@
         </el-tooltip>
       </div>
       <div v-if="menu.pages.length " v-for="(page ,index) in menu.pages" :index="page.page_id" :key="page.page_id">
-        <p class="catalog-title">{{page.page_title}}</p>
+        <p class="catalog-title" :class="currentId == page.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page.page_id)">{{page.page_title}}</p>
       </div>
       <div class="catalog" v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id">
         <p class="catalog-page-title catalog2-page-title">{{catalog2.cat_name}}</p>

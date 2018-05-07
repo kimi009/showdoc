@@ -7,7 +7,7 @@ exports.default = {
     'demo' : 'Demo',
     'index_login_or_register' : 'Login / Register',
     'my_item' : 'My items',
-    'section_title1' : 'ShowDoc',
+    'section_title1' : 'API Document',
     'section_description1' : ' A tool greatly applicable for an IT team',
     'section_title2' : 'API Document',
     'section_description2' : 'ShowDoc can compile exquisite API documents <br>in a very fast and convenient way',
