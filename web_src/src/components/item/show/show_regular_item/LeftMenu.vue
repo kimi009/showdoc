@@ -10,17 +10,17 @@
         </el-tooltip>
       </div>
       <div v-if="menu.pages.length " v-for="(page ,index) in menu.pages" :index="page.page_id" :key="page.page_id">
-        <p class="catalog-page-title">{{page.page_title}}</p>
+        <p class="catalog-title">{{page.page_title}}</p>
       </div>
       <div class="catalog" v-if="menu.catalogs.length" v-for="(catalog2 ,catalog_index) in menu.catalogs" :index="catalog2.cat_id" :key="catalog2.cat_id">
-        <p class="catalog-page-title">{{catalog2.cat_name}}</p>
+        <p class="catalog-page-title catalog2-page-title">{{catalog2.cat_name}}</p>
         <div v-if="catalog2.pages" v-for="(page2 ,page2_index) in catalog2.pages" :key="page2.page_id">
-          <p class="catalog-title" :class="currentId == page2.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page2)">{{page2.page_title}}</p>
-          <div v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
-            <p class="catalog-page-title">{{catalog3.cat_name}}</p>
-            <div v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">
-              <p class="catalog-title">{{page3.page_title}}</p>
-            </div>
+          <p class="catalog-title catalog2-title" :class="currentId == page2.page_id ? 'catalog-actived-title' : 'catalog-normal-title'" @click="selectItem(page2)">{{page2.page_title}}</p>
+        </div>
+        <div v-if="catalog2.catalogs.length" v-for="(catalog3 ,catalog_index3) in catalog2.catalogs" :index="catalog3.cat_id" :key="catalog3.cat_id">
+          <p class="catalog-page-title catalog3-page-title">{{catalog3.cat_name}}</p>
+          <div v-if="catalog3.pages" v-for="(page3 ,page3_index) in catalog3.pages" :index="page3.page_id" :key="page3.page_id">
+            <p class="catalog-title catalog3-title">{{page3.page_title}}</p>
           </div>
         </div>
       </div>
@@ -153,6 +153,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.left_menu {
+  padding-bottom: 100px;
+}
 .el-header {
   color: #333;
   line-height: 60px;
@@ -195,13 +198,27 @@ export default {
   cursor: default;
   padding: 0 30px;
 }
+.catalog2-page-title{
+  font-size: 16px;
+}
+.catalog3-page-title{
+  font-size: 14px;
+  /* margin-left: 16px; */
+}
 .catalog-title {
   margin: 0px;
   line-height: 30px;
-  font-size: 14px;
   color: #000;
   padding: 0 30px;
   cursor: pointer;
+}
+.catalog2-title {
+  font-size: 14px;
+  /* margin-left: 16px; */
+}
+.catalog3-title {
+  font-size: 14px;
+  margin-left: 20px;
 }
 .catalog-actived-title {
   background-color: #4a77ac;
@@ -229,7 +246,7 @@ export default {
   background: rgba(0, 0, 0, 0.2);
 }
 #left-side::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.3);
+  /* background: rgba(0, 0, 0, 0.3); */
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;

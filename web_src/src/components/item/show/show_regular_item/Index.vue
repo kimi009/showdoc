@@ -260,7 +260,7 @@ export default {
 
 .doc-title-box {
   height: auto;
-  margin: 30px 30px 10px 30px;
+  margin: 30px 30px 10px 18px;
   width: auto;
   border-bottom: 1px solid #ebebeb;
   padding-bottom: 10px;

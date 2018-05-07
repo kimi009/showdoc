@@ -231,9 +231,9 @@ export default {
         });
         
         //表格头颜色
-        $("#"+this.id+" table thead tr").css("background-color","#409eff") ;
-        $("#"+this.id+" table thead tr").css("color","#fff") ;
-
+        $("#"+this.id+" table thead tr").css("background-color","#F7F8FB") ;
+        $("#"+this.id+" table thead tr").css("color","#333") ;
+        $("#"+this.id+" table thead tr").css("font-weight","700") ;
         //代码块美化
         $("#"+this.id+" .linenums").css("padding-left","5px") ;
         $("#"+this.id+" .linenums li").css("list-style-type","none") ;
