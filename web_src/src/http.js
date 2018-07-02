@@ -4,7 +4,7 @@
 
 import axios from 'axios'
 import router from '@/router/index'
-
+var Promise = require('es6-promise').Promise;
 // axios 配置
 axios.defaults.timeout = 20000;
 axios.defaults.baseURL = DocConfig.server;
